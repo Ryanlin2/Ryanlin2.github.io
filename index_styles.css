@@ -1,63 +1,57 @@
 body {
-    background: blanchedalmond;
-  text-align: center;
+    background-image: url("Great_Wall.jpg");
+      background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
 }
+
 
 #logo-navbar-container{
-    background-color: blanchedalmond;
-    width:80%;
+    width: 80%;
     margin:auto;
-    border-radius: 30px;
+    margin-top: 30px;
+    background-color: blanchedalmond;
 }
+
 
 #logo-text{
-    font-size: 90px;
+    font-size: 50px;
     color: red;
     font-style: bold;
-    display:inline-block;
-    padding:30px;
+    padding: 15px;
     background-color: white;
-    border-radius: 30px;
+    border-radius: 9px;
     border-style: solid;
+    display:inline;
 }
 
-#navbar-row{
-  background-color: blanchedalmond;
-}
 .navbar{
-    background-color: #00A36C;
-    display:flexbox;
-    font-size: 30px;
-    margin: 10px;;
-    align-self: center;
     text-align: center;
+    display:inline-block;
     list-style-type:none;
-    padding:30px;
-    border-style: solid;
-    border-radius: 30px;
-
+    background-color: blanchedalmond;
+   
 }
 
 .nav-item-position{
-    display: inline;
-    padding: 30px;
+    display: inline-flex;
+    padding-right: 10px;
+    height: 60%;
 }
 
 .nav-item{
-    font-size: 50px;
-    font-style: italic;
-    color: black;
-    background-color: blanchedalmond;
-    padding-left: 20px;
-    padding-right: 20px;
-    border-radius: 10px;
-    border-style: solid;
+  font-size: 40px;
+  font-style: italic;
+  color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+
 }
 
 #nav-text:hover{
-  color:red;
+  color:black;
   background-color: white;
-  font-size: 60px;
+
 }
 
 #home-container{
@@ -67,35 +61,29 @@ body {
 
 #home-row{
   display:inline-flex;
-  width: 90%;
-  
 }
 
 #picture-of-store-column{
     width:40%;
-    text-align: center;
+    padding:5%;
 }
 
 #picture-of-store{
-  border-radius:30px;
-  width:600px
+  width:100%;
 }
 
 #weekly-schedule{
-  background-color: white;
-  padding-top:50px;
+  background-color: blanchedalmond;
   width: 30%;
-  border-style:solid;
-  border-radius:30px;
+  text-align: center;
+  margin: 20px;
 }
 
 #location-column{
-  padding-top: 50px;
-  background-color: white;
+  margin:20px;
+  background-color: blanchedalmond;
   width:30%;
-  border-radius: 30px;
-  border-style: solid;
-  align-self: center;
+  text-align: center;
 }
 
 
@@ -104,6 +92,7 @@ body {
   padding-top:10px;
   text-align: center;
   width: 80%;
+
 }
 
 
@@ -121,12 +110,17 @@ border-style:solid;
 }
 
 .slideshow-container {
-  background-color: white;
+  width:50%
 }
 
 .mySlides{
-  border-style: solid;
   display:inline-flexbox;
+}
+
+.slide-description{
+  background-color: black;
+  color: white;
+  height: 100%;
 }
 
 
