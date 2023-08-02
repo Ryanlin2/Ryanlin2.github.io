@@ -1,0 +1,154 @@
+body {
+    background-image: url("Great_Wall.jpg");
+      background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+
+#logo-navbar-container{
+    width: 80%;
+    margin:auto;
+    margin-top: 30px;
+    background-color: blanchedalmond;
+}
+
+
+#logo-text{
+    font-size: 50px;
+    color: red;
+    font-style: bold;
+    padding: 15px;
+    background-color: white;
+    border-radius: 9px;
+    border-style: solid;
+    display:inline;
+}
+
+.navbar{
+    text-align: center;
+    display:inline-block;
+    list-style-type:none;
+    background-color: blanchedalmond;
+   
+}
+
+.nav-item-position{
+    display: inline-flex;
+    padding-right: 10px;
+    height: 60%;
+}
+
+.nav-item{
+  font-size: 40px;
+  font-style: italic;
+  color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+
+#nav-text:hover{
+  color:black;
+  background-color: white;
+
+}
+
+#home-container{
+  width:80%;
+  margin:auto; 
+}
+
+#home-row{
+  display:inline-flex;
+}
+
+#picture-of-store-column{
+    width:40%;
+    padding:5%;
+}
+
+#picture-of-store{
+  width:100%;
+}
+
+#weekly-schedule{
+  background-color: blanchedalmond;
+  width: 30%;
+  text-align: center;
+  margin: 20px;
+}
+
+#location-column{
+  margin:20px;
+  background-color: blanchedalmond;
+  width:30%;
+  text-align: center;
+}
+
+
+
+#gallery-container{
+  padding-top:10px;
+  text-align: center;
+  width: 80%;
+
+}
+
+
+
+#slideshow-column-title{
+ font-style: bold;
+ font-size: 40px;
+ color:#00A36C;
+ text-align: center;
+ background-color: white;
+ border-radius: 30px;
+ padding-left: 20px;
+ padding-right:20px;
+border-style:solid;
+}
+
+.slideshow-container {
+  width:50%
+}
+
+.mySlides{
+  display:inline-flexbox;
+}
+
+.slide-description{
+  background-color: black;
+  color: white;
+  height: 100%;
+}
+
+
+
+
+.fade {
+ -webkit-animation: fade 8s cubic-bezier(.4, 0, .2, 1) infinite;
+ -moz-animation: fade 8s cubic-bezier(.4, 0, .2, 1) infinite;
+ -o-animation: fade 8s cubic-bezier(.4, 0, .2, 1) infinite;
+ animation: fade 8s cubic-bezier(.4, 0, .2, 1) infinite;
+}
+
+@-webkit-keyframes fade {
+ 0%,100% { opacity: 0 }
+ 20%,80% { opacity: 1 }
+}
+
+@-moz-keyframes fade {
+ 0%,100% { opacity: 0 }
+ 20%,80% { opacity: 1 }
+}
+
+@-o-keyframes fade {
+ 0%,100% { opacity: 0 }
+ 20%,80% { opacity: 1 }
+}
+
+@keyframes fade {
+ 0%,100% { opacity: 0 }
+ 20%,80% { opacity: 1 }
+}
