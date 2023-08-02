@@ -1,0 +1,145 @@
+body{
+   background-color: white;
+}
+
+#Logo-nav{
+    display:inline-flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: white;
+}
+
+
+nav{
+    width: 100%;
+}
+
+nav ul{
+    display:flex;
+    list-style: none;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+nav li {
+    background-color: rgb(0, 68, 44);
+    padding: 1rem 5rem;
+    border-radius: 20px;
+}
+
+nav li:hover{
+    background-color: darkred;
+}
+
+nav a{
+    font-size: 24px;
+    text-decoration: none;
+    color:white;
+}
+
+main{
+    padding: 2rem;
+    background-image: url("photos/Chinese-dishes2.png");
+}
+
+#homepage{
+    display:flex-box;
+    grid-gap: 2rem;
+  
+}
+
+
+
+
+#homepage article{
+    border-style: solid;
+    padding: 3rem;
+   
+}
+
+#Information-Section{
+    display: flex;
+}
+
+#promotion{
+    background-color: white;
+    opacity: .8;
+}
+.info{
+    border: 1px solid;
+    border-radius: 1.5rem;
+    padding:1.5rem;
+    width:33%;
+    margin: 3rem;
+    background-color: white;
+    opacity: .8;
+}
+
+.info h1{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+footer {
+    padding: 1rem;
+    background-color: grey;
+    justify-content: space-evenly;
+    height:50px;
+   
+}
+
+footer div{
+    display: inline-flex;
+
+}
+  
+footer img {
+    width: auto;
+    height: 40px;
+}
+
+#footer-logo{
+    float:left;
+}
+
+#footer-text{
+    float:right;
+}
+
+ /* Responsive styles */
+ @media screen and (max-width: 768px) {
+
+    body{
+        width:100%;
+        text-align: center;
+    }
+
+    #Logo-nav{
+        flex-direction: column;
+    }
+    
+    nav{
+        background-color: blanchedalmond;
+    }
+
+    nav ul {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    nav ul li {
+        width:100%;
+    }
+
+    #homepage article{
+        width:fit-content;
+    }
+
+    #Information-Section{
+        display:block;
+    }
+
+}
+  
+
+
