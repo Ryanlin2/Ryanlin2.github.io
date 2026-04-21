@@ -1,211 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ryan's Projects</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ryan's Projects</title>
 
-    :root {
-      --bg: #f5f2ed;
-      --ink: #111;
-      --muted: #888;
-      --accent: #c84b2f;
-      --card-bg: #fff;
-      --border: #ddd;
-    }
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
 
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'DM Mono', monospace;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 80px 24px 120px;
-    }
+<style>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
 
-    header {
-      width: 100%;
-      max-width: 680px;
-      margin-bottom: 64px;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: rise 0.6s ease forwards;
-    }
+:root{
+  --bg:#f5f2ed;
+  --ink:#111;
+  --muted:#888;
+  --accent:#c84b2f;
+  --card-bg:#fff;
+  --border:#ddd;
+}
 
-    header .label {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'DM Mono', monospace;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:80px 24px 120px;
+}
 
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 6vw, 3.2rem);
-      font-weight: 700;
-      line-height: 1.1;
-      color: var(--ink);
-    }
+header{
+  width:100%;
+  max-width:680px;
+  margin-bottom:64px;
+  opacity:0;
+  transform:translateY(16px);
+  animation:rise .6s ease forwards;
+}
 
-    header p {
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.7;
-      font-weight: 300;
-    }
+header .label{
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:12px;
+}
 
-    .divider {
-      width: 100%;
-      max-width: 680px;
-      height: 1px;
-      background: var(--border);
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: rise 0.6s 0.15s ease forwards;
-    }
+header h1{
+  font-family:'Playfair Display', serif;
+  font-size:clamp(2rem,6vw,3.2rem);
+  line-height:1.1;
+}
 
-    .project-list {
-      width: 100%;
-      max-width: 680px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+.divider{
+  width:100%;
+  max-width:680px;
+  height:1px;
+  background:var(--border);
+  margin-bottom:40px;
+}
 
-    .project-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 22px 28px;
-      text-decoration: none;
-      color: var(--ink);
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-      opacity: 0;
-      transform: translateY(12px);
-    }
+.project-list{
+  width:100%;
+  max-width:680px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
 
-    .project-card:nth-child(1) { animation: rise 0.5s 0.25s ease forwards; }
-    .project-card:nth-child(2) { animation: rise 0.5s 0.35s ease forwards; }
-    .project-card:nth-child(3) { animation: rise 0.5s 0.45s ease forwards; }
-    .project-card:nth-child(4) { animation: rise 0.5s 0.55s ease forwards; }
-    .project-card:nth-child(5) { animation: rise 0.5s 0.65s ease forwards; }
+.project-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:22px 28px;
+  text-decoration:none;
+  color:var(--ink);
+  transition:.18s ease;
+  opacity:0;
+  transform:translateY(12px);
+  animation:rise .5s .25s ease forwards;
+}
 
-    .project-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
-      border-color: var(--accent);
-    }
+.project-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(0,0,0,.08);
+  border-color:var(--accent);
+}
 
-    .project-card:active {
-      transform: translateY(0px) scale(0.99);
-      box-shadow: none;
-    }
+.card-left{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
 
-    .card-left { display: flex; flex-direction: column; gap: 5px; }
+.card-number{
+  font-size:10px;
+  letter-spacing:.15em;
+  color:var(--accent);
+}
 
-    .card-number {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      text-transform: uppercase;
-    }
+.card-name{
+  font-size:16px;
+  font-weight:500;
+}
 
-    .card-name {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--ink);
-    }
+.card-desc{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+}
 
-    .card-desc {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 300;
-      margin-top: 2px;
-    }
+.tag-group{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  align-items:center;
+  gap:8px;
+  max-width:220px;
+  flex-shrink:0;
+}
 
-    .card-tag {
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 3px 8px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
+.card-tag{
+  font-size:10px;
+  letter-spacing:.08em;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:3px;
+  padding:3px 8px;
+  color:var(--muted);
+  white-space:nowrap;
+}
 
-    .arrow {
-      font-size: 18px;
-      color: var(--muted);
-      transition: color 0.18s, transform 0.18s;
-      margin-left: 16px;
-    }
+.arrow{
+  font-size:18px;
+  color:var(--muted);
+  margin-left:6px;
+  align-self:center;
+}
 
-    .project-card:hover .arrow {
-      color: var(--accent);
-      transform: translateX(4px);
-    }
+.project-card:hover .arrow{
+  color:var(--accent);
+  transform:translateX(4px);
+}
 
-    footer {
-      margin-top: 72px;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      opacity: 0;
-      animation: rise 0.6s 0.9s ease forwards;
-    }
+footer{
+  margin-top:72px;
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:.1em;
+}
 
-    @keyframes rise {
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+@keyframes rise{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* Mobile */
+@media (max-width:640px){
+
+  .project-card{
+    flex-direction:column;
+  }
+
+  .tag-group{
+    justify-content:flex-start;
+    max-width:100%;
+  }
+
+  .arrow{
+    display:none;
+  }
+}
+</style>
 </head>
+
 <body>
 
-  <header>
-    <div class="label">Portfolio</div>
-    <h1>Ryan's Projects</h1>
-  </header>
+<header>
+  <div class="label">Portfolio</div>
+  <h1>Ryan's Projects</h1>
+</header>
 
-  <div class="divider"></div>
+<div class="divider"></div>
 
-  <div class="project-list">
+<div class="project-list">
 
-    <a class="project-card"
-      href="https://public.tableau.com/app/profile/ryan.lin4572/viz/NBA_Team_Stats_Win_Lost/Dashboard1?publish=yes"
-      target="_blank"
-      rel="noopener noreferrer">
+<a class="project-card"
+href="https://public.tableau.com/app/profile/ryan.lin4572/viz/NBA_Team_Stats_Win_Lost/Dashboard1?publish=yes"
+target="_blank"
+rel="noopener noreferrer">
 
-      <div class="card-left">
-        <span class="card-number">01</span>
-        <span class="card-name">NBA 2025 Team Analytics </span>
-        <span class="card-desc">Dynamic dashboard displaying 2025-2026 regular season NBA team statistics</span>
-      </div>
+  <div class="card-left">
+    <span class="card-number">01</span>
 
-      <div style="display:flex; align-items:center; gap:12px;">
-        <span class="card-tag">Python</span>
-        <span class="card-tag">PostgresQL</span>
-        <span class="card-tag">AWS</span>
-        <span class="card-tag">Tableau</span>
-        <span class="arrow">→</span>
-      </div>
+    <span class="card-name">
+      NBA 2025 Team Analytics
+    </span>
 
-    </a>
-
+    <span class="card-desc">
+      Dynamic dashboard displaying 2025–2026 regular season NBA team statistics
+    </span>
   </div>
 
-  <footer>ryan · built with intent</footer>
+  <div class="tag-group">
+    <span class="card-tag">Python</span>
+    <span class="card-tag">PostgreSQL</span>
+    <span class="card-tag">AWS</span>
+    <span class="card-tag">Tableau</span>
+    <span class="arrow">→</span>
+  </div>
+
+</a>
+
+</div>
+
+<footer>
+  ryan · built with intent
+</footer>
 
 </body>
 </html>
