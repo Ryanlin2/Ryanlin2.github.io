@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>National Income Accounting Information Center</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --border: #e5e7eb;
+      --soft: #eff6ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 56px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 12px;
+    }
+
+    header p {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    nav a:hover {
+      background: var(--soft);
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 32px auto;
+      padding: 0 20px 48px;
+    }
+
+    section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      color: #111827;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .card h3 {
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+    }
+
+    .formula {
+      background: #111827;
+      color: white;
+      padding: 16px;
+      border-radius: 14px;
+      font-family: "Courier New", monospace;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+      color: #1e3a8a;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .highlight {
+      background: var(--soft);
+      border-left: 5px solid var(--primary);
+      padding: 18px;
+      border-radius: 14px;
+      margin-top: 14px;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 28px 20px;
+      border-top: 1px solid var(--border);
+      background: white;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    button {
+      border: none;
+      background: var(--primary);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>National Income Accounting Information Center</h1>
+    <p>A clear, student-friendly guide to GDP, GNP, NNP, National Income, Personal Income, Disposable Income, and the main methods used to measure economic activity.</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#measures">Measures</a>
+    <a href="#approaches">Approaches</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#realnominal">Real vs Nominal</a>
+    <a href="#revision">Quick Revision</a>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <h2 class="section-title">Overview</h2>
+      <div class="card">
+        <span class="tag">Definition</span>
+        <p><strong>National income accounting</strong> is the system used to measure the total production, income, and expenditure of an economy over a period of time, usually a quarter or a year.</p>
+        <div class="highlight">
+          <strong>Main idea:</strong> In an economy, total output, total income, and total expenditure are closely connected. What one person spends becomes income for someone else.
+        </div>
+      </div>
+    </section>
+
+    <section id="measures">
+      <h2 class="section-title">Major Measures</h2>
+      <input class="search-box" id="searchInput" placeholder="Search measures, formulas, or definitions..." onkeyup="filterCards()" />
+      <div class="grid" id="cardGrid">
+        <div class="card searchable">
+          <h3>Gross Domestic Product (GDP)</h3>
+          <p>Total market value of all final goods and services produced within a country during a specific period.</p>
+        </div>
+        <div class="card searchable">
+          <h3>Gross National Product (GNP)</h3>
+          <p>GDP plus net income earned by domestic residents from abroad.</p>
+        </div>
+        <div class="card searchable">
+          <h3>Net Domestic Product (NDP)</h3>
+          <p>GDP minus depreciation. It measures domestic output after accounting for wear and tear of capital.</p>
+        </div>
+        <div class="card searchable">
+          <h3>Net National Product (NNP)</h3>
+          <p>GNP minus depreciation. It measures national output after capital consumption.</p>
+        </div>
+        <div class="card searchable">
+          <h3>National Income (NI)</h3>
+          <p>Total income earned by a country’s factors of production: wages, rent, interest, and profit.</p>
+        </div>
+        <div class="card searchable">
+          <h3>Personal Income (PI)</h3>
+          <p>Total income actually received by individuals and households before personal taxes.</p>
+        </div>
+        <div class="card searchable">
+          <h3>Disposable Personal Income (DPI)</h3>
+          <p>Income available to households after paying personal taxes.</p>
+        </div>
+        <div class="card searchable">
+          <h3>GDP Deflator</h3>
+          <p>A price index used to convert nominal GDP into real GDP and measure economy-wide inflation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="approaches">
+      <h2 class="section-title">Three Approaches to Measuring GDP</h2>
+      <div class="grid">
+        <div class="card searchable">
+          <h3>1. Expenditure Approach</h3>
+          <p>Adds all spending on final goods and services.</p>
+          <div class="formula">GDP = C + I + G + (X − M)</div>
+          <p class="muted">C = consumption, I = investment, G = government spending, X = exports, M = imports.</p>
+        </div>
+        <div class="card searchable">
+          <h3>2. Income Approach</h3>
+          <p>Adds the incomes earned by factors of production.</p>
+          <div class="formula">GDP = Wages + Rent + Interest + Profit</div>
+          <p class="muted">Often adjusted for taxes, subsidies, and depreciation in formal accounts.</p>
+        </div>
+        <div class="card searchable">
+          <h3>3. Value-Added Approach</h3>
+          <p>Adds the value added at each stage of production.</p>
+          <div class="formula">Value Added = Output Value − Intermediate Goods</div>
+          <p class="muted">This avoids double counting.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="formulas">
+      <h2 class="section-title">Key Formulas</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Concept</th>
+            <th>Formula</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GDP</td>
+            <td>GDP = C + I + G + (X − M)</td>
+            <td>Total domestic production measured by spending.</td>
+          </tr>
+          <tr>
+            <td>GNP</td>
+            <td>GNP = GDP + Net Factor Income from Abroad</td>
+            <td>Production by a nation’s residents, regardless of location.</td>
+          </tr>
+          <tr>
+            <td>NDP</td>
+            <td>NDP = GDP − Depreciation</td>
+            <td>Domestic output after capital wear and tear.</td>
+          </tr>
+          <tr>
+            <td>NNP</td>
+            <td>NNP = GNP − Depreciation</td>
+            <td>National output after capital wear and tear.</td>
+          </tr>
+          <tr>
+            <td>DPI</td>
+            <td>DPI = Personal Income − Personal Taxes</td>
+            <td>Income households can spend or save.</td>
+          </tr>
+          <tr>
+            <td>Real GDP</td>
+            <td>Real GDP = (Nominal GDP ÷ Price Index) × 100</td>
+            <td>GDP adjusted for inflation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="realnominal">
+      <h2 class="section-title">Real GDP vs Nominal GDP</h2>
+      <div class="grid">
+        <div class="card searchable">
+          <h3>Nominal GDP</h3>
+          <p>GDP measured using current-year prices. It can rise because output increases, prices increase, or both.</p>
+        </div>
+        <div class="card searchable">
+          <h3>Real GDP</h3>
+          <p>GDP adjusted for inflation. It is better for comparing economic growth over time.</p>
+        </div>
+      </div>
+      <div class="highlight">
+        <strong>Exam tip:</strong> If prices are changing, use real GDP to compare actual changes in production.
+      </div>
+    </section>
+
+    <section id="revision">
+      <h2 class="section-title">Quick Revision Center</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Memory Chain</h3>
+          <p><strong>GDP → GNP → NNP → NI → PI → DPI</strong></p>
+          <button onclick="alert('GDP: domestic output\nGNP: national output\nNNP: GNP minus depreciation\nNI: factor income\nPI: household income received\nDPI: income after taxes')">Review Meanings</button>
+        </div>
+        <div class="card">
+          <h3>Common Mistake</h3>
+          <p>Do not count intermediate goods when calculating GDP. Count only final goods or use the value-added method.</p>
+        </div>
+        <div class="card">
+          <h3>Why It Matters</h3>
+          <p>National income accounting helps governments, businesses, and economists measure growth, inflation, living standards, and economic performance.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>National Income Accounting Information Center | Built for study, revision, and classroom use.</p>
+  </footer>
+
+  <script>
+    function filterCards() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.searchable');
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(input) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
