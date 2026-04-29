@@ -67,9 +67,22 @@ header h1{
   margin-bottom:40px;
 }
 
-.project-list{
+.section{
   width:100%;
   max-width:680px;
+  margin-bottom:44px;
+}
+
+.section-title{
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:16px;
+}
+
+.project-list{
+  width:100%;
   display:flex;
   flex-direction:column;
   gap:14px;
@@ -198,36 +211,74 @@ footer{
 
 <div class="divider"></div>
 
-<div class="project-list">
+<section class="section">
+  <h2 class="section-title">Projects</h2>
 
-<a class="project-card"
-href="https://public.tableau.com/app/profile/ryan.lin4572/viz/NBA_Team_Stats_Win_Lost/Dashboard1?publish=yes"
-target="_blank"
-rel="noopener noreferrer">
+  <div class="project-list">
 
-  <div class="card-left">
-    <span class="card-number">01</span>
+    <a class="project-card"
+    href="https://public.tableau.com/app/profile/ryan.lin4572/viz/NBA_Team_Stats_Win_Lost/Dashboard1?publish=yes"
+    target="_blank"
+    rel="noopener noreferrer">
 
-    <span class="card-name">
-      NBA 2025 Team Analytics
-    </span>
+      <div class="card-left">
+        <span class="card-number">01</span>
 
-    <span class="card-desc">
-      Dynamic dashboard displaying 2025–2026 regular season NBA team statistics
-    </span>
+        <span class="card-name">
+          NBA 2025 Team Analytics
+        </span>
+
+        <span class="card-desc">
+          Dynamic dashboard displaying 2025–2026 regular season NBA team statistics
+        </span>
+      </div>
+
+      <div class="tag-group">
+        <span class="card-tag">Python</span>
+        <span class="card-tag">PostgreSQL</span>
+        <span class="card-tag">AWS</span>
+        <span class="card-tag">Tableau</span>
+        <span class="arrow">→</span>
+      </div>
+
+    </a>
+
   </div>
+</section>
 
-  <div class="tag-group">
-    <span class="card-tag">Python</span>
-    <span class="card-tag">PostgreSQL</span>
-    <span class="card-tag">AWS</span>
-    <span class="card-tag">Tableau</span>
-    <span class="arrow">→</span>
+<section class="section">
+  <h2 class="section-title">Knowledge Sites</h2>
+
+  <div class="project-list">
+
+    <a class="project-card"
+    href="https://ryanlin2.github.io/Macro_Economics_Fundamental_Indicators/"
+    target="_blank"
+    rel="noopener noreferrer">
+
+      <div class="card-left">
+        <span class="card-number">01</span>
+
+        <span class="card-name">
+          Economic Indicators
+        </span>
+
+        <span class="card-desc">
+          Basic information site explaining fundamental macroeconomic indicators and how they are used to understand economic performance.
+        </span>
+      </div>
+
+      <div class="tag-group">
+        <span class="card-tag">Macroeconomics</span>
+        <span class="card-tag">Econometrics</span>
+        <span class="card-tag">Economic Indicators</span>
+        <span class="arrow">→</span>
+      </div>
+
+    </a>
+
   </div>
-
-</a>
-
-</div>
+</section>
 
 <footer>
   ryan · built with intent
