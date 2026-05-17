@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Econometric Archive — A Catalogue of Data Sources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@300;400;500;600&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --rust: #a8341c;
+    --ochre: #b58a2e;
+    --moss: #4a5d3a;
+    --sea: #2a4858;
+    --plum: #5c2a4a;
+    --muted: #6b5f4d;
+    --rule: #d4c8b0;
+    --shadow: rgba(26, 22, 18, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  /* Paper grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(168, 52, 28, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(74, 93, 58, 0.04) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  /* ================= MASTHEAD ================= */
+  .masthead {
+    position: relative;
+    z-index: 2;
+    padding: 32px 56px 24px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--rule);
+    margin-bottom: 18px;
+  }
+
+  .masthead-top span { display: inline-block; }
+
+  .title-wrap {
+    text-align: center;
+    padding: 8px 0 12px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(48px, 9vw, 128px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  h1.title em {
+    font-style: normal;
+    color: var(--rust);
+  }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--muted);
+    margin-top: 14px;
+    letter-spacing: 0.01em;
+  }
+
+  .masthead-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 3px double var(--ink);
+    padding-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink);
+  }
+
+  .vol-badge {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  /* ================= INDEX VIEW ================= */
+  .view { display: none; position: relative; z-index: 2; }
+  .view.active { display: block; }
+
+  .index-intro {
+    padding: 48px 56px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .intro-left h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+
+  .intro-left h2 .drop {
+    font-size: 96px;
+    float: left;
+    line-height: 0.8;
+    margin: 4px 8px 0 0;
+    font-weight: 700;
+    color: var(--rust);
+    font-style: italic;
+  }
+
+  .intro-left p {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--ink);
+    columns: 1;
+  }
+
+  .intro-right {
+    border-left: 1px solid var(--ink);
+    padding-left: 32px;
+  }
+
+  .intro-right h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 14px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px dotted var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  .stat-row .num {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .stat-row .label {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  /* ================= FILTER BAR ================= */
+  .filter-bar {
+    padding: 28px 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper-deep);
+  }
+
+  .filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 7px 14px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+  }
+
+  .chip:hover { background: var(--ink); color: var(--paper); }
+  .chip.active { background: var(--rust); border-color: var(--rust); color: var(--paper); }
+
+  .search-box {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--ink);
+    padding: 4px 0;
+    min-width: 240px;
+  }
+
+  .search-box input {
+    border: none;
+    background: transparent;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    outline: none;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .search-box input::placeholder { color: var(--muted); }
+
+  .search-box .glyph {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--rust);
+    font-size: 14px;
+  }
+
+  /* ================= CATALOG ENTRIES ================= */
+  .catalog {
+    padding: 0 56px;
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 60px 1fr 280px 140px;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.3s ease, padding 0.3s ease;
+    align-items: start;
+    position: relative;
+  }
+
+  .entry:hover {
+    background: var(--paper-deep);
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .entry:hover .entry-num { color: var(--rust); }
+  .entry:hover .arrow { transform: translateX(8px); opacity: 1; }
+
+  .entry-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 32px;
+    color: var(--muted);
+    line-height: 0.9;
+    transition: color 0.2s ease;
+  }
+
+  .entry-main h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .entry-main .org-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--rust);
+    margin-bottom: 10px;
+  }
+
+  .entry-main .blurb {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.5;
+    max-width: 580px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border: 0.5px solid var(--muted);
+    color: var(--muted);
+    border-radius: 1px;
+  }
+
+  .meta-col {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .meta-col .freq {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 8px;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 500;
+  }
+
+  .arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateX(0) translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    color: var(--rust);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+  }
+
+  /* ================= DETAIL VIEW ================= */
+  .detail-header {
+    padding: 32px 56px 24px;
+    border-bottom: 1px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .back-btn:hover { color: var(--rust); }
+  .back-btn::before {
+    content: '←';
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    transition: transform 0.2s ease;
+  }
+  .back-btn:hover::before { transform: translateX(-4px); }
+
+  .detail-folio {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .detail-hero {
+    padding: 56px 56px 40px;
+    border-bottom: 3px double var(--ink);
+    position: relative;
+  }
+
+  .detail-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .detail-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rust);
+    max-width: 200px;
+  }
+
+  .detail-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .detail-title em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .detail-tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--muted);
+    max-width: 680px;
+    margin-top: 8px;
+  }
+
+  .detail-quick-facts {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+  }
+
+  .quick-fact {
+    background: var(--paper);
+    padding: 16px 20px;
+  }
+
+  .quick-fact .qf-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .quick-fact .qf-val {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* Content sections */
+  .detail-body {
+    padding: 48px 56px 80px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 64px;
+  }
+
+  .detail-main section {
+    margin-bottom: 44px;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rust);
+  }
+
+  .section-label .num-prefix {
+    color: var(--ink);
+    margin-right: 8px;
+  }
+
+  .detail-main h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .detail-main h3 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .detail-main p {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  .pull-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--rust);
+    padding: 20px 0 20px 24px;
+    border-left: 3px solid var(--rust);
+    margin: 24px 0;
+  }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 10px;
+  }
+
+  .data-card {
+    border: 1px solid var(--ink);
+    padding: 16px 18px;
+    background: var(--paper-deep);
+    position: relative;
+  }
+
+  .data-card .dc-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 6px;
+  }
+
+  .data-card .dc-name {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .data-card .dc-desc {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* Sidebar */
+  .detail-sidebar {
+    border-left: 1px solid var(--ink);
+    padding-left: 32px;
+    position: sticky;
+    top: 20px;
+    align-self: start;
+  }
+
+  .sidebar-block {
+    margin-bottom: 36px;
+  }
+
+  .sidebar-block h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .member-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .member-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule);
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+  }
+
+  .member-list li:last-child { border-bottom: none; }
+
+  .member-list .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rust);
+    flex-shrink: 0;
+    transform: translateY(-2px);
+  }
+
+  .member-list .m-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-top: 1px;
+  }
+
+  .schedule {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .schedule-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dotted var(--rule);
+  }
+
+  .schedule-row:last-child { border-bottom: none; }
+
+  .schedule-row .s-key {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+  }
+
+  .schedule-row .s-val {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .pulse-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--moss);
+    color: var(--paper);
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .pulse-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--paper);
+    border-radius: 50%;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* Footer */
+  .footer {
+    padding: 32px 56px;
+    border-top: 3px double var(--ink);
+    background: var(--paper-deep);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Decorative ornaments */
+  .ornament {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    color: var(--rust);
+    font-size: 20px;
+    letter-spacing: 1em;
+    padding: 24px 0;
+    opacity: 0.5;
+  }
+
+  /* Animation on load */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .entry {
+    animation: fadeUp 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .entry:nth-child(1) { animation-delay: 0.05s; }
+  .entry:nth-child(2) { animation-delay: 0.10s; }
+  .entry:nth-child(3) { animation-delay: 0.15s; }
+  .entry:nth-child(4) { animation-delay: 0.20s; }
+  .entry:nth-child(5) { animation-delay: 0.25s; }
+  .entry:nth-child(6) { animation-delay: 0.30s; }
+  .entry:nth-child(7) { animation-delay: 0.35s; }
+  .entry:nth-child(8) { animation-delay: 0.40s; }
+  .entry:nth-child(9) { animation-delay: 0.45s; }
+  .entry:nth-child(10) { animation-delay: 0.50s; }
+  .entry:nth-child(n+11) { animation-delay: 0.55s; }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .masthead, .index-intro, .filter-bar, .catalog, .detail-header, .detail-hero, .detail-body, .footer {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .index-intro { grid-template-columns: 1fr; gap: 32px; }
+    .intro-right { border-left: none; border-top: 1px solid var(--ink); padding-left: 0; padding-top: 24px; }
+    .detail-body { grid-template-columns: 1fr; }
+    .detail-sidebar { border-left: none; padding-left: 0; border-top: 1px solid var(--ink); padding-top: 32px; position: static; }
+    .entry { grid-template-columns: 40px 1fr; }
+    .meta-col, .tags { grid-column: 2; text-align: left; }
+    .meta-col { margin-top: 8px; }
+    .detail-quick-facts { grid-template-columns: repeat(2, 1fr); }
+    .data-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-top">
+    <span id="topDate"></span>
+    <span>Volume I · No. 1</span>
+    <span>Established MMXXVI</span>
+  </div>
+  <div class="title-wrap">
+    <div class="eyebrow">A Working Reference For Empirical Research</div>
+    <h1 class="title">The Econometric <em>Archive</em></h1>
+    <div class="subtitle">A catalogue of data sources for the study of economies & their measurement.</div>
+  </div>
+  <div class="masthead-bottom">
+    <span>§ Index of Sources</span>
+    <span class="vol-badge">Edition 2026</span>
+    <span>Macroeconomic · Financial · Microdata</span>
+  </div>
+</header>
+
+<!-- INDEX VIEW -->
+<div id="indexView" class="view active">
+
+  <section class="index-intro">
+    <div class="intro-left">
+      <h2><span class="drop">A</span> compendium for the working econometrician — assembled with attention to provenance, frequency, and the institutional motivations behind each series. Every source herein is catalogued by what it produces, who maintains it, and the cadence at which the world is observed and re-observed.</h2>
+    </div>
+    <div class="intro-right">
+      <h3>The Archive in Numbers</h3>
+      <div class="stat-row"><span class="num">12</span><span class="label">Sources</span></div>
+      <div class="stat-row"><span class="num">04</span><span class="label">Continents</span></div>
+      <div class="stat-row"><span class="num">∞</span><span class="label">Series</span></div>
+      <div class="stat-row"><span class="num">1.M</span><span class="label">Update Cycle</span></div>
+    </div>
+  </section>
+
+  <div class="filter-bar">
+    <span class="filter-label">Filter by Domain →</span>
+    <button class="chip active" data-filter="all">All</button>
+    <button class="chip" data-filter="macro">Macro</button>
+    <button class="chip" data-filter="micro">Microdata</button>
+    <button class="chip" data-filter="finance">Finance</button>
+    <button class="chip" data-filter="trade">Trade</button>
+    <button class="chip" data-filter="labor">Labor</button>
+    <button class="chip" data-filter="development">Development</button>
+    <div class="search-box">
+      <span class="glyph">⌕</span>
+      <input id="searchInput" type="text" placeholder="Search the archive…">
+    </div>
+  </div>
+
+  <div class="catalog" id="catalog"></div>
+
+  <div class="ornament">❦ · ❦ · ❦</div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="detailView" class="view">
+  <div class="detail-header">
+    <button class="back-btn" onclick="showIndex()">Return to the Index</button>
+    <span class="detail-folio" id="detailFolio">Folio —</span>
+  </div>
+  <div id="detailContent"></div>
+  <div class="ornament">❦ · ❦ · ❦</div>
+</div>
+
+<footer class="footer">
+  <span>The Econometric Archive · 2026</span>
+  <span>Curated for Researchers, Policymakers & The Quietly Curious</span>
+  <span>set in Fraunces & JetBrains Mono</span>
+</footer>
+
+<script>
+  // ============== DATA ==============
+  const SOURCES = [
+    {
+      id: 'fred',
+      name: 'FRED',
+      fullName: 'Federal Reserve Economic Data',
+      org: 'Federal Reserve Bank of St. Louis',
+      domain: 'macro',
+      tagline: 'The single most-consulted free macroeconomic database in the United States.',
+      blurb: 'Aggregates U.S. and international time series from over 100 source agencies. Eight hundred thousand-plus series, all free, with APIs, Excel add-ins, and graphing tools beloved by graduate students.',
+      coverage: 'US + Global',
+      since: '1991',
+      access: 'Free · API',
+      seriesCount: '800,000+',
+      tags: ['macro', 'finance', 'monetary'],
+      motivation: 'Conceived as the public-service arm of the St. Louis Fed Research Division, FRED exists because high-quality macro data once required expensive Bloomberg terminals or paper releases. Its mission is to democratise the raw material of economic research — to put the same numbers in the hands of a Princeton professor and a community college student.',
+      members: [
+        { name: 'Research Division, FRBSL', role: 'Curator & Maintainer' },
+        { name: 'BEA, BLS, Census, Treasury', role: 'Upstream Suppliers' },
+        { name: 'OECD, World Bank, BIS', role: 'International Partners' },
+        { name: 'ALFRED Team', role: 'Vintage Data Archive' }
+      ],
+      dataKinds: [
+        { cat: 'Output', name: 'GDP & National Accounts', desc: 'Real and nominal GDP, components, deflators, quarterly back to 1947.' },
+        { cat: 'Prices', name: 'CPI · PCE · PPI', desc: 'Headline and core inflation measures at monthly cadence.' },
+        { cat: 'Labor', name: 'Employment & Unemployment', desc: 'CES, CPS, JOLTS series — payrolls, wages, vacancies.' },
+        { cat: 'Monetary', name: 'Interest Rates & Money', desc: 'Fed funds, Treasury curve, M1/M2, reserves balances.' },
+        { cat: 'International', name: 'Exchange Rates & Trade', desc: 'Bilateral and trade-weighted dollar indices, balance of payments.' },
+        { cat: 'Vintage', name: 'ALFRED Real-Time Data', desc: 'Snapshots of what data looked like at any prior date.' }
+      ],
+      schedule: [
+        { k: 'Employment', v: 'First Friday' },
+        { k: 'CPI', v: 'Mid-month' },
+        { k: 'GDP Advance', v: 'Last month, quarterly' },
+        { k: 'Daily Rates', v: 'Each business day' },
+        { k: 'API Updates', v: 'Within minutes of release' }
+      ],
+      pullQuote: 'The lingua franca of American applied macroeconomics.',
+      freq: 'Continuous'
+    },
+    {
+      id: 'worldbank',
+      name: 'World Bank Open Data',
+      fullName: 'WDI · WGI · ICP',
+      org: 'The World Bank Group',
+      domain: 'development',
+      tagline: 'The definitive cross-country development dataset, covering 217 economies.',
+      blurb: 'Home of the World Development Indicators (WDI), Worldwide Governance Indicators, Doing Business archives, and the International Comparison Program. Where panel-data papers begin.',
+      coverage: '217 Countries',
+      since: '2010',
+      access: 'Free · API · CSV',
+      seriesCount: '1,400+ indicators',
+      tags: ['development', 'macro', 'trade'],
+      motivation: 'Born from the 2010 "Open Data Initiative," the World Bank committed to releasing the statistical backbone of its development work to anyone. The aim: enable researchers in low-income countries to study their own economies without paying institutional subscription fees, and to allow comparable cross-country empirics on growth, poverty, and governance.',
+      members: [
+        { name: 'Development Data Group (DECDG)', role: 'Statistical Authority' },
+        { name: 'National Statistical Offices', role: 'Country Reporters' },
+        { name: 'IMF, OECD, UN Statistics', role: 'Methodological Partners' },
+        { name: 'Living Standards Measurement Study', role: 'Microdata Branch' }
+      ],
+      dataKinds: [
+        { cat: 'Macro', name: 'World Development Indicators', desc: 'GDP, growth, inflation, fiscal balance for 217 economies.' },
+        { cat: 'Poverty', name: 'PovcalNet / PIP', desc: 'Global poverty headcounts, Gini coefficients, distributional measures.' },
+        { cat: 'Governance', name: 'WGI Index', desc: 'Six aggregate governance indicators across 200+ countries.' },
+        { cat: 'Prices', name: 'International Comparison Program', desc: 'Purchasing-power-parity benchmarks every six years.' },
+        { cat: 'Survey', name: 'LSMS Household Data', desc: 'Microdata from 40+ countries, harmonised across waves.' },
+        { cat: 'Trade', name: 'WITS / Comtrade Mirror', desc: 'Bilateral trade flows by HS product code.' }
+      ],
+      schedule: [
+        { k: 'WDI Refresh', v: 'April · July · October · December' },
+        { k: 'Poverty', v: 'Bi-annual' },
+        { k: 'Governance', v: 'Annual' },
+        { k: 'ICP', v: 'Every 6 years' },
+        { k: 'LSMS Waves', v: 'Per-country basis' }
+      ],
+      pullQuote: 'The world\'s development ledger, kept in public view since 2010.',
+      freq: 'Quarterly'
+    },
+    {
+      id: 'imf',
+      name: 'IMF Data',
+      fullName: 'IFS · WEO · BOP · DOTS',
+      org: 'International Monetary Fund',
+      domain: 'macro',
+      tagline: 'The reference archive for international monetary and fiscal statistics.',
+      blurb: 'Holds the International Financial Statistics, World Economic Outlook databases, Balance of Payments, Direction of Trade — the canonical sources for cross-border macro work.',
+      coverage: '190 Members',
+      since: '1948',
+      access: 'Free · API · SDMX',
+      seriesCount: '32,000+ series',
+      tags: ['macro', 'finance', 'trade'],
+      motivation: 'The IMF\'s surveillance mandate requires comparable financial data from every member country. Compiling and disseminating that data — first in printed yearbooks, now via SDMX web services — is treated as a global public good underwritten by member subscriptions.',
+      members: [
+        { name: 'IMF Statistics Department', role: 'Compilation Authority' },
+        { name: 'Central Banks of Member States', role: 'Primary Reporters' },
+        { name: 'Research Department', role: 'WEO Projections' },
+        { name: 'External Sector Reporting Group', role: 'BOP Standards' }
+      ],
+      dataKinds: [
+        { cat: 'Monetary', name: 'International Financial Stats', desc: 'Monetary, banking, exchange-rate data since 1948.' },
+        { cat: 'Forecast', name: 'World Economic Outlook', desc: 'Five-year projections for 190 countries, biannual.' },
+        { cat: 'External', name: 'Balance of Payments', desc: 'Current, capital, financial accounts harmonised to BPM6.' },
+        { cat: 'Trade', name: 'Direction of Trade Statistics', desc: 'Bilateral trade values by partner country.' },
+        { cat: 'Fiscal', name: 'Government Finance Statistics', desc: 'General government revenue, spending, debt under GFSM 2014.' },
+        { cat: 'Stability', name: 'Financial Soundness Indicators', desc: 'Bank capital, asset quality, liquidity by country.' }
+      ],
+      schedule: [
+        { k: 'IFS', v: 'Monthly' },
+        { k: 'WEO', v: 'April & October' },
+        { k: 'BOP/IIP', v: 'Quarterly' },
+        { k: 'DOTS', v: 'Monthly' },
+        { k: 'GFS', v: 'Annual' }
+      ],
+      pullQuote: 'When the question is comparable across borders, the IMF is the answer.',
+      freq: 'Monthly'
+    },
+    {
+      id: 'bls',
+      name: 'BLS',
+      fullName: 'Bureau of Labor Statistics',
+      org: 'U.S. Department of Labor',
+      domain: 'labor',
+      tagline: 'The authoritative U.S. source for employment, prices, and productivity.',
+      blurb: 'Produces the monthly Employment Situation, CPI release, JOLTS, ECI, and productivity statistics. The single most market-moving data publisher in the world.',
+      coverage: 'United States',
+      since: '1884',
+      access: 'Free · API · Public Files',
+      seriesCount: '100,000+ series',
+      tags: ['labor', 'macro'],
+      motivation: 'Founded in 1884 to investigate the conditions of American labor — wages, hours, costs of living — at a moment when industrialisation made working conditions a political question. Today its statutory mandate is to produce non-partisan, methodologically transparent measures of the labor market that all parties can argue from, but not about.',
+      members: [
+        { name: 'Office of Employment Statistics', role: 'CES · CPS · JOLTS' },
+        { name: 'Office of Prices & Living Conditions', role: 'CPI · PPI · Import Prices' },
+        { name: 'Office of Productivity & Technology', role: 'Productivity Measures' },
+        { name: 'Office of Compensation', role: 'ECI · National Comp Survey' }
+      ],
+      dataKinds: [
+        { cat: 'Jobs', name: 'Employment Situation (CES + CPS)', desc: 'Nonfarm payrolls and the household unemployment rate.' },
+        { cat: 'Prices', name: 'Consumer Price Index', desc: 'CPI-U, CPI-W, Chained-CPI; the inflation benchmark.' },
+        { cat: 'Producers', name: 'Producer Price Index', desc: 'Wholesale and intermediate-goods prices.' },
+        { cat: 'Turnover', name: 'JOLTS', desc: 'Job openings, hires, quits — the labor flow indicators.' },
+        { cat: 'Wages', name: 'Employment Cost Index', desc: 'Quarterly wage and benefit cost growth.' },
+        { cat: 'Output', name: 'Productivity', desc: 'Labor and multifactor productivity by sector.' }
+      ],
+      schedule: [
+        { k: 'Jobs Report', v: 'First Friday, 8:30 ET' },
+        { k: 'CPI', v: '~10th-13th of month' },
+        { k: 'PPI', v: 'Day after CPI' },
+        { k: 'JOLTS', v: 'Early month' },
+        { k: 'ECI', v: 'Quarterly' }
+      ],
+      pullQuote: 'Markets stop for the BLS.',
+      freq: 'Monthly'
+    },
+    {
+      id: 'bea',
+      name: 'BEA',
+      fullName: 'Bureau of Economic Analysis',
+      org: 'U.S. Department of Commerce',
+      domain: 'macro',
+      tagline: 'The national income accountant for the United States.',
+      blurb: 'Producer of GDP, personal income, the international transactions accounts, regional economic accounts, and the industry-level input-output tables.',
+      coverage: 'United States · States · MSAs',
+      since: '1972',
+      access: 'Free · API · CSV',
+      seriesCount: '20,000+ series',
+      tags: ['macro', 'trade'],
+      motivation: 'Charged by statute with producing the National Income and Product Accounts — Simon Kuznets\' framework, refined for a century — the BEA exists to make sense of the U.S. economy as a single accounting entity. Its work underlies fiscal forecasting, monetary policy, and every macroeconomics textbook.',
+      members: [
+        { name: 'National Economic Accounts', role: 'GDP · NIPA' },
+        { name: 'International Accounts', role: 'BOP · FDI · Trade in Services' },
+        { name: 'Regional Accounts', role: 'State & Metro GDP' },
+        { name: 'Industry Accounts', role: 'Input-Output · Industry GDP' }
+      ],
+      dataKinds: [
+        { cat: 'National', name: 'GDP & NIPA Tables', desc: 'Quarterly GDP, components, deflators, personal income.' },
+        { cat: 'Regional', name: 'State & Metro GDP', desc: 'Sub-national output by industry.' },
+        { cat: 'Industry', name: 'Input-Output Accounts', desc: 'Inter-industry transactions, make and use tables.' },
+        { cat: 'External', name: 'International Transactions', desc: 'U.S. balance of payments, IIP.' },
+        { cat: 'FDI', name: 'Direct Investment Statistics', desc: 'Inbound and outbound FDI by country and industry.' },
+        { cat: 'Personal', name: 'Personal Income & Outlays', desc: 'PCE, savings rate, disposable income.' }
+      ],
+      schedule: [
+        { k: 'GDP Advance', v: 'Last week of month after Q' },
+        { k: 'GDP 2nd & 3rd', v: 'Monthly revisions' },
+        { k: 'Personal Income', v: 'Late each month' },
+        { k: 'Annual Update', v: 'July or September' },
+        { k: 'Comprehensive', v: 'Every 5 years' }
+      ],
+      pullQuote: 'If you cite "GDP," you are citing the BEA.',
+      freq: 'Monthly'
+    },
+    {
+      id: 'eurostat',
+      name: 'Eurostat',
+      fullName: 'European Statistical Office',
+      org: 'European Commission',
+      domain: 'macro',
+      tagline: 'Comparable statistics across the European Union and its candidates.',
+      blurb: 'Harmonises national statistics from 27 EU members plus EFTA and candidate countries, enabling cross-country comparison under common methodologies (ESA 2010, HICP).',
+      coverage: 'EU + EFTA + Candidates',
+      since: '1953',
+      access: 'Free · API · SDMX',
+      seriesCount: '4,500+ datasets',
+      tags: ['macro', 'labor', 'trade', 'development'],
+      motivation: 'A common market requires common measurement. Eurostat exists to ensure that "unemployment" in Lisbon means the same thing as "unemployment" in Helsinki, and that fiscal compliance with the Stability and Growth Pact can be assessed on consistent definitions.',
+      members: [
+        { name: 'European Statistical System', role: '27 National Stat Offices' },
+        { name: 'Directorate B', role: 'Methodology & Standards' },
+        { name: 'Directorate F', role: 'Macroeconomic Statistics' },
+        { name: 'Directorate G', role: 'Trade & Business Stats' }
+      ],
+      dataKinds: [
+        { cat: 'Output', name: 'National Accounts (ESA 2010)', desc: 'GDP, sectoral accounts, government finance.' },
+        { cat: 'Prices', name: 'HICP', desc: 'Harmonised Index of Consumer Prices — ECB\'s inflation target.' },
+        { cat: 'Labor', name: 'EU Labour Force Survey', desc: 'Harmonised quarterly unemployment, employment, hours.' },
+        { cat: 'Trade', name: 'Intra/Extra-EU Trade', desc: 'Detailed bilateral goods trade by CN8 product code.' },
+        { cat: 'Social', name: 'EU-SILC', desc: 'Income, poverty, living conditions microdata.' },
+        { cat: 'Demography', name: 'Population & Migration', desc: 'Annual demographic balance, migration flows.' }
+      ],
+      schedule: [
+        { k: 'HICP Flash', v: 'Last day of month' },
+        { k: 'GDP Flash', v: '~30 days after Q' },
+        { k: 'Unemployment', v: 'Monthly' },
+        { k: 'Trade', v: 'Monthly' },
+        { k: 'EU-SILC', v: 'Annual, lagged 18-24 months' }
+      ],
+      pullQuote: 'Europe, made commensurable.',
+      freq: 'Monthly'
+    },
+    {
+      id: 'oecd',
+      name: 'OECD.Stat',
+      fullName: 'OECD Statistics',
+      org: 'Organisation for Economic Co-operation and Development',
+      domain: 'macro',
+      tagline: 'Comparable indicators for 38 advanced economies — and many beyond.',
+      blurb: 'Hosts national accounts, productivity, education, taxation, and a vast library of leading indicators. Particularly strong on themes the OECD invented (PISA, TiVA, AEOI).',
+      coverage: '38 Members + Partners',
+      since: '1961',
+      access: 'Free · API · SDMX',
+      seriesCount: '1,200+ datasets',
+      tags: ['macro', 'trade', 'labor', 'development'],
+      motivation: 'A club of high-income democracies needs benchmarks for what membership looks like. The OECD\'s statistical work serves peer review, mutual learning, and the production of "best practice" — from corporate tax rates to school assessments to global value chains.',
+      members: [
+        { name: 'Statistics & Data Directorate', role: 'Methodological Lead' },
+        { name: 'Economics Department', role: 'Forecasts & Outlook' },
+        { name: 'Centre for Tax Policy', role: 'Tax Statistics' },
+        { name: 'Education Directorate', role: 'PISA · Education at a Glance' }
+      ],
+      dataKinds: [
+        { cat: 'Forecast', name: 'Economic Outlook', desc: 'Twice-yearly projections, two-year horizon.' },
+        { cat: 'Leading', name: 'Composite Leading Indicators', desc: 'Designed to anticipate business cycle turning points.' },
+        { cat: 'Tax', name: 'Revenue Statistics', desc: 'Tax-to-GDP ratios, taxes by base.' },
+        { cat: 'GVCs', name: 'Trade in Value Added (TiVA)', desc: 'Domestic and foreign value-added embedded in exports.' },
+        { cat: 'Productivity', name: 'Productivity Database', desc: 'Labor and multifactor productivity by industry.' },
+        { cat: 'Education', name: 'PISA Results', desc: 'Tri-annual reading, math, science scores.' }
+      ],
+      schedule: [
+        { k: 'Outlook', v: 'May & November' },
+        { k: 'CLI', v: 'Monthly' },
+        { k: 'Revenue Stats', v: 'Annual' },
+        { k: 'TiVA', v: 'Annual, lagged 3 years' },
+        { k: 'PISA', v: 'Every 3 years' }
+      ],
+      pullQuote: 'The benchmark for benchmarking.',
+      freq: 'Varies'
+    },
+    {
+      id: 'bis',
+      name: 'BIS Statistics',
+      fullName: 'Bank for International Settlements',
+      org: 'BIS · Basel',
+      domain: 'finance',
+      tagline: 'The central bankers\' bank — and the statistician of global finance.',
+      blurb: 'Source of international banking statistics, derivatives turnover, credit aggregates, property prices, and the Triennial Central Bank Survey of FX markets.',
+      coverage: 'Global · 60+ Reporters',
+      since: '1930',
+      access: 'Free · CSV · API',
+      seriesCount: '20+ datasets',
+      tags: ['finance', 'macro'],
+      motivation: 'Cross-border banking exposures are invisible from any single jurisdiction. The BIS, as the central bankers\' coordinator since 1930, exists to assemble that mosaic — making global financial linkages legible to those responsible for stability.',
+      members: [
+        { name: 'Monetary & Economic Department', role: 'Statistics & Research' },
+        { name: 'Committee on Global Financial System', role: 'Data Governance' },
+        { name: 'BIS Member Central Banks', role: '63 Reporters Worldwide' },
+        { name: 'IFC (Irving Fisher Committee)', role: 'Methodological Forum' }
+      ],
+      dataKinds: [
+        { cat: 'Banking', name: 'Locational & Consolidated Banking Stats', desc: 'Cross-border claims and liabilities of internationally active banks.' },
+        { cat: 'Credit', name: 'Credit to Private Sector', desc: 'Total credit, credit gaps, debt-service ratios.' },
+        { cat: 'FX', name: 'Triennial FX Survey', desc: 'Daily turnover in global FX markets, every three years.' },
+        { cat: 'Debt', name: 'Debt Securities Statistics', desc: 'International and domestic debt issuance.' },
+        { cat: 'Property', name: 'Residential Property Prices', desc: 'House price indices for 60+ economies.' },
+        { cat: 'Rates', name: 'Policy & Effective Exchange Rates', desc: 'BIS-compiled NEER, REER series.' }
+      ],
+      schedule: [
+        { k: 'Banking Stats', v: 'Quarterly' },
+        { k: 'Credit', v: 'Quarterly' },
+        { k: 'Property Prices', v: 'Quarterly' },
+        { k: 'Triennial FX', v: 'Every 3 years' },
+        { k: 'OTC Derivatives', v: 'Semi-annual' }
+      ],
+      pullQuote: 'The cartographer of the global financial network.',
+      freq: 'Quarterly'
+    },
+    {
+      id: 'crsp',
+      name: 'CRSP',
+      fullName: 'Center for Research in Security Prices',
+      org: 'University of Chicago Booth',
+      domain: 'finance',
+      tagline: 'The canonical equity-returns database for academic finance.',
+      blurb: 'Holds daily and monthly U.S. stock-return data back to 1925, plus indices, mutual fund returns, and Treasury yield curves. The foundation of the CAPM, Fama-French factors, and most asset-pricing tests.',
+      coverage: 'U.S. Equities & Funds',
+      since: '1960',
+      access: 'Subscription · WRDS',
+      seriesCount: '30,000+ securities',
+      tags: ['finance'],
+      motivation: 'Funded in 1960 by Merrill Lynch with the explicit goal of letting academics test whether the stock market was efficient. The resulting decades-long return history made modern empirical finance possible and remains the field\'s standard reference.',
+      members: [
+        { name: 'CRSP Research Team', role: 'Data Construction' },
+        { name: 'University of Chicago Booth', role: 'Institutional Home' },
+        { name: 'WRDS (Wharton)', role: 'Distribution Platform' },
+        { name: 'Academic Advisory Board', role: 'Methodology Review' }
+      ],
+      dataKinds: [
+        { cat: 'Equities', name: 'Stock Returns', desc: 'Daily and monthly returns for all NYSE/AMEX/NASDAQ since 1925.' },
+        { cat: 'Indices', name: 'CRSP Market Indices', desc: 'Value- and equal-weighted market portfolios.' },
+        { cat: 'Funds', name: 'Survivor-Bias-Free Mutual Funds', desc: 'Returns including extinct funds, since 1962.' },
+        { cat: 'Treasuries', name: 'Treasury & Risk-Free Series', desc: 'Daily and monthly Treasury yields used as risk-free rate.' },
+        { cat: 'Linking', name: 'CRSP/Compustat Merged', desc: 'Permanent identifiers bridging price and accounting data.' },
+        { cat: 'Events', name: 'Distributions & Corporate Actions', desc: 'Dividends, splits, delistings — clean adjustment factors.' }
+      ],
+      schedule: [
+        { k: 'Daily Stock', v: 'Daily, T+1' },
+        { k: 'Monthly Stock', v: 'Monthly' },
+        { k: 'Mutual Funds', v: 'Monthly' },
+        { k: 'Annual Update', v: 'Full reconciliation' },
+        { k: 'Corporate Actions', v: 'Continuous' }
+      ],
+      pullQuote: 'Without CRSP, modern empirical finance does not exist.',
+      freq: 'Daily'
+    },
+    {
+      id: 'comtrade',
+      name: 'UN Comtrade',
+      fullName: 'United Nations Commodity Trade Statistics',
+      org: 'United Nations Statistics Division',
+      domain: 'trade',
+      tagline: 'The world\'s bilateral trade ledger, in HS detail.',
+      blurb: 'Records merchandise trade between 200+ reporters and partners, by HS or SITC product code. Foundational data for gravity models and value-chain research.',
+      coverage: '200+ Reporters',
+      since: '1962',
+      access: 'Free · API (limited) · Plus',
+      seriesCount: '1B+ records',
+      tags: ['trade'],
+      motivation: 'No single trade flow is observed by both parties identically — Comtrade exists to compile, reconcile and publish national customs declarations so that researchers can study who trades what with whom. It is the dataset that built gravity equations.',
+      members: [
+        { name: 'UN Statistics Division', role: 'Compilation & Publication' },
+        { name: 'National Customs Authorities', role: 'Source Reporters' },
+        { name: 'World Customs Organisation', role: 'HS Nomenclature' },
+        { name: 'World Bank WITS', role: 'Analytical Front-End' }
+      ],
+      dataKinds: [
+        { cat: 'Goods', name: 'HS6 Bilateral Trade', desc: 'Imports and exports at six-digit Harmonized System detail.' },
+        { cat: 'Goods', name: 'SITC Historical', desc: 'Standard International Trade Classification, back to 1962.' },
+        { cat: 'Services', name: 'EBOPS Services Trade', desc: 'Commercial services trade by category.' },
+        { cat: 'Tariffs', name: 'TRAINS via WITS', desc: 'Applied and bound tariffs at the tariff-line level.' },
+        { cat: 'Mirror', name: 'Reporter & Partner Records', desc: 'Both sides of every flow, for cross-checking.' },
+        { cat: 'Aggregates', name: 'Total Trade by Country', desc: 'Total imports and exports, annual.' }
+      ],
+      schedule: [
+        { k: 'Annual Data', v: 'Lag of 6-18 months' },
+        { k: 'Monthly Data', v: 'For select reporters' },
+        { k: 'Revisions', v: 'Continuous' },
+        { k: 'HS Nomenclature', v: 'Revised every 5 years' },
+        { k: 'Plus Service', v: 'Daily updates' }
+      ],
+      pullQuote: 'Every container ship eventually shows up here.',
+      freq: 'Annual'
+    },
+    {
+      id: 'ipums',
+      name: 'IPUMS',
+      fullName: 'Integrated Public Use Microdata Series',
+      org: 'University of Minnesota',
+      domain: 'micro',
+      tagline: 'Harmonised census and survey microdata, across countries and centuries.',
+      blurb: 'Houses harmonised U.S. census records 1850-present, the American Community Survey, CPS, and analogues for 100+ countries — plus health, time-use, and historical microdata.',
+      coverage: '100+ Countries',
+      since: '1991',
+      access: 'Free · Registration',
+      seriesCount: '1B+ person-records',
+      tags: ['micro', 'labor', 'development'],
+      motivation: 'Census microdata had long sat in incompatible national formats, locking out comparative research. IPUMS exists to harmonise variable definitions, recode them consistently across time and place, and distribute the cleaned files free of charge to researchers — turning archived punch cards into a global laboratory.',
+      members: [
+        { name: 'Minnesota Population Center', role: 'Lead Institution' },
+        { name: 'IPUMS USA Team', role: 'Decennial Census + ACS' },
+        { name: 'IPUMS International', role: 'Global Census Network' },
+        { name: 'IPUMS Health Surveys', role: 'NHIS · MEPS' }
+      ],
+      dataKinds: [
+        { cat: 'Census', name: 'IPUMS USA', desc: 'Full-count U.S. census 1850-1940, samples to present.' },
+        { cat: 'Survey', name: 'IPUMS CPS', desc: 'Monthly Current Population Survey, harmonised since 1962.' },
+        { cat: 'Global', name: 'IPUMS International', desc: 'Census microdata from 100+ countries.' },
+        { cat: 'Time Use', name: 'ATUS-X', desc: 'American Time Use Survey, with extracted variables.' },
+        { cat: 'Health', name: 'NHIS · MEPS · BRFSS', desc: 'Major U.S. health surveys, harmonised.' },
+        { cat: 'Spatial', name: 'NHGIS', desc: 'Census tables linked to GIS boundary files.' }
+      ],
+      schedule: [
+        { k: 'ACS Release', v: 'Following Sept/Dec' },
+        { k: 'CPS Monthly', v: 'Quarterly batch' },
+        { k: 'International', v: 'Per-country basis' },
+        { k: 'Decennial', v: 'Every 10 years' },
+        { k: 'Health Surveys', v: 'Annual' }
+      ],
+      pullQuote: 'A century of census records, finally able to talk to each other.',
+      freq: 'Annual'
+    },
+    {
+      id: 'penn',
+      name: 'Penn World Table',
+      fullName: 'PWT 10.x',
+      org: 'University of Groningen · UC Davis',
+      domain: 'development',
+      tagline: 'The cross-country growth dataset, in real PPP-adjusted terms.',
+      blurb: 'Provides comparable measures of GDP, capital, labor, and productivity for 183 countries 1950-present. The data behind every cross-country growth regression.',
+      coverage: '183 Countries',
+      since: '1978',
+      access: 'Free · CSV · Stata',
+      seriesCount: '50+ variables',
+      tags: ['development', 'macro'],
+      motivation: 'Comparing GDP across countries requires converting at PPP rather than market exchange rates — a task national statistical offices do not perform. Robert Summers and Alan Heston launched the PWT in the 1970s to provide such comparable real-income measures, and the project continues under the Groningen Growth and Development Centre.',
+      members: [
+        { name: 'Robert Inklaar', role: 'Project Director' },
+        { name: 'Groningen Growth Centre', role: 'Compilation' },
+        { name: 'UC Davis', role: 'Co-Host & Distribution' },
+        { name: 'Marcel Timmer · Pieter Woltjer', role: 'Methodology' }
+      ],
+      dataKinds: [
+        { cat: 'Output', name: 'Real GDP (Multiple Concepts)', desc: 'Expenditure-side and output-side PPP-adjusted GDP.' },
+        { cat: 'Inputs', name: 'Capital Stock & Services', desc: 'Constructed capital measures by asset type.' },
+        { cat: 'Labor', name: 'Employment & Hours', desc: 'Persons engaged, average hours worked.' },
+        { cat: 'Productivity', name: 'TFP Levels & Growth', desc: 'Total factor productivity, both growth and levels.' },
+        { cat: 'Human Capital', name: 'Human Capital Index', desc: 'Based on years of schooling and Mincer returns.' },
+        { cat: 'Prices', name: 'PPP Price Levels', desc: 'Detailed price levels for GDP components.' }
+      ],
+      schedule: [
+        { k: 'Version Release', v: 'Every 2-3 years' },
+        { k: 'Current Vintage', v: 'PWT 10.01' },
+        { k: 'Data Coverage', v: 'Through latest available year (~ T-3)' },
+        { k: 'ICP Integration', v: 'After each ICP round' },
+        { k: 'Methodology', v: 'Documented per release' }
+      ],
+      pullQuote: 'The denominator of every growth regression for forty years.',
+      freq: 'Biennial'
+    }
+  ];
+
+  // ============== RENDERING ==============
+  const catalog = document.getElementById('catalog');
+  const indexView = document.getElementById('indexView');
+  const detailView = document.getElementById('detailView');
+  const detailContent = document.getElementById('detailContent');
+  const detailFolio = document.getElementById('detailFolio');
+  const searchInput = document.getElementById('searchInput');
+
+  let activeFilter = 'all';
+  let activeQuery = '';
+
+  // Date in masthead
+  const dateOpts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('topDate').textContent = new Date().toLocaleDateString('en-US', dateOpts);
+
+  function pad(n, w=2) { return String(n).padStart(w, '0'); }
+
+  function renderIndex() {
+    const filtered = SOURCES.filter(s => {
+      const matchesFilter = activeFilter === 'all' || s.tags.includes(activeFilter);
+      const q = activeQuery.toLowerCase();
+      const matchesQuery = !q || s.name.toLowerCase().includes(q) || s.fullName.toLowerCase().includes(q) || s.org.toLowerCase().includes(q) || s.blurb.toLowerCase().includes(q);
+      return matchesFilter && matchesQuery;
+    });
+
+    if (filtered.length === 0) {
+      catalog.innerHTML = `<div style="padding: 80px 0; text-align: center; font-family: 'Fraunces', serif; font-style: italic; color: var(--muted); font-size: 22px;">No entries match the present criteria.</div>`;
+      return;
+    }
+
+    catalog.innerHTML = filtered.map((s, i) => `
+      <div class="entry" data-id="${s.id}" onclick="showDetail('${s.id}')">
+        <div class="entry-num">${pad(SOURCES.indexOf(s) + 1)}</div>
+        <div class="entry-main">
+          <div class="org-sub">${s.org}</div>
+          <h3>${s.name}<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-left: 12px; font-weight: 400; letter-spacing: 0.1em;">· ${s.fullName}</span></h3>
+          <p class="blurb">${s.blurb}</p>
+        </div>
+        <div class="tags">
+          ${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+        <div class="meta-col">
+          ${s.coverage}<br>
+          Since ${s.since}<br>
+          <span class="freq">${s.freq}</span>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+    `).join('');
+  }
+
+  function showDetail(id) {
+    const s = SOURCES.find(x => x.id === id);
+    if (!s) return;
+
+    const idx = SOURCES.indexOf(s);
+    detailFolio.textContent = `Folio ${pad(idx + 1)} / ${pad(SOURCES.length)}`;
+
+    detailContent.innerHTML = `
+      <section class="detail-hero">
+        <div class="detail-eyebrow">Source № ${pad(idx + 1)} · ${s.domain.toUpperCase()}</div>
+        <h1 class="detail-title">${s.name.split(' ').map((w, i) => i === Math.floor(s.name.split(' ').length / 2) ? `<em>${w}</em>` : w).join(' ')}</h1>
+        <p class="detail-tagline">${s.tagline}</p>
+
+        <div class="detail-quick-facts">
+          <div class="quick-fact">
+            <div class="qf-label">Maintainer</div>
+            <div class="qf-val">${s.org}</div>
+          </div>
+          <div class="quick-fact">
+            <div class="qf-label">Coverage</div>
+            <div class="qf-val">${s.coverage}</div>
+          </div>
+          <div class="quick-fact">
+            <div class="qf-label">Established</div>
+            <div class="qf-val">${s.since}</div>
+          </div>
+          <div class="quick-fact">
+            <div class="qf-label">Cadence</div>
+            <div class="qf-val">${s.freq}</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="detail-body">
+        <div class="detail-main">
+          <section>
+            <div class="section-label"><span class="num-prefix">I.</span>The Motivation</div>
+            <h3>Why does it <em>exist</em>?</h3>
+            <p>${s.motivation}</p>
+            <div class="pull-quote">${s.pullQuote}</div>
+          </section>
+
+          <section>
+            <div class="section-label"><span class="num-prefix">II.</span>What it Contains</div>
+            <h3>The Categories of <em>Data</em></h3>
+            <p style="margin-bottom: 22px;">A non-exhaustive map of what one will find in the archive, organised by the dominant series families. ${s.seriesCount} are catalogued in total.</p>
+            <div class="data-grid">
+              ${s.dataKinds.map(d => `
+                <div class="data-card">
+                  <div class="dc-cat">${d.cat}</div>
+                  <div class="dc-name">${d.name}</div>
+                  <div class="dc-desc">${d.desc}</div>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+
+          <section>
+            <div class="section-label"><span class="num-prefix">III.</span>On Access</div>
+            <h3>How to <em>Obtain</em> the Data</h3>
+            <p>Method of access: <strong style="font-family: 'JetBrains Mono', monospace; font-size: 14px; background: var(--paper-deep); padding: 2px 8px;">${s.access}</strong>. Researchers typically interact with this source via its public API, bulk downloads, or — where applicable — institutional subscriptions routed through university libraries and platforms such as WRDS.</p>
+          </section>
+        </div>
+
+        <aside class="detail-sidebar">
+          <div class="sidebar-block">
+            <h4>The Custodians</h4>
+            <ul class="member-list">
+              ${s.members.map(m => `
+                <li>
+                  <span class="dot"></span>
+                  <span>${m.name}<span class="m-role">${m.role}</span></span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="sidebar-block">
+            <h4>Publication Calendar</h4>
+            <div class="schedule">
+              ${s.schedule.map(r => `
+                <div class="schedule-row">
+                  <span class="s-key">${r.k}</span>
+                  <span class="s-val">${r.v}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="pulse-indicator">${s.freq} · Live</div>
+          </div>
+
+          <div class="sidebar-block">
+            <h4>Domain Tags</h4>
+            <div class="tags" style="gap: 6px;">
+              ${s.tags.map(t => `<span class="tag" style="font-size: 10px; padding: 4px 10px;">${t}</span>`).join('')}
+            </div>
+          </div>
+        </aside>
+      </div>
+    `;
+
+    indexView.classList.remove('active');
+    detailView.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showIndex() {
+    detailView.classList.remove('active');
+    indexView.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Filter chips
+  document.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      activeFilter = c.dataset.filter;
+      renderIndex();
+    });
+  });
+
+  // Search
+  searchInput.addEventListener('input', e => {
+    activeQuery = e.target.value;
+    renderIndex();
+  });
+
+  // Initial render
+  renderIndex();
+</script>
+
+</body>
+</html>
